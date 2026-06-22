@@ -1,0 +1,632 @@
+/* Estilos del Simulador de Crecimiento de Población - Diseño Premium Light Emerald */
+:root {
+    --bg-main: #f4f7f5;
+    --bg-card: #ffffff;
+    --border-color: #e5e8e5;
+    --text-primary: #2d3748;
+    --text-secondary: #718096;
+    
+    --color-accent: #10b981;       /* Verde esmeralda */
+    --color-accent-light: #e6f7f0; /* Fondo verde claro */
+    --color-accent-hover: #d1f2e5;
+    --color-gray-btn: #edf2f7;
+    --color-gray-btn-hover: #e2e8f0;
+    
+    --font-heading: 'Outfit', 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --transition-smooth: all 0.2s ease-in-out;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    padding-bottom: 2rem;
+}
+
+/* Contenedor de la Aplicación */
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Barra de Navegación */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.nav-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    color: var(--color-accent);
+    filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.15));
+}
+
+.nav-title-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-title h1 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.nav-title p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Segmented Control Pill Navigation */
+.nav-links {
+    display: flex;
+    background: #eff2ef;
+    padding: 4px;
+    border-radius: 12px;
+    gap: 2px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: 0.5rem 1.25rem;
+    border-radius: 9px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.nav-link:hover {
+    color: var(--text-primary);
+}
+
+.nav-link.active {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Grid Layout */
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* Tarjeta General */
+.card-glass {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Columna Mapa/Stats */
+.map-stats-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Panel de Controles */
+.control-panel {
+    gap: 1.5rem;
+}
+
+.panel-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.panel-header h2 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.panel-header p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Controles de Entrada */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label-val {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label-val label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.val-display {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    background: var(--color-accent-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.input-helper {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: -0.25rem;
+}
+
+/* Custom Select */
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.select-wrapper select {
+    width: 100%;
+    background: #f7fafc;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.65rem 1rem;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    appearance: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+}
+
+.select-wrapper select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+.select-wrapper::after {
+    content: '\f107';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-secondary);
+}
+
+/* Range Input */
+input[type="range"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #edf2f7;
+    border-radius: 999px;
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    transition: var(--transition-smooth);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+/* Botones de Acción de Tiempo */
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+    border: none;
+    padding: 0.85rem 1.5rem;
+    border-radius: 14px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.btn-primary:hover {
+    background: var(--color-accent-hover);
+}
+
+.btn-secondary {
+    background: var(--color-gray-btn);
+    color: var(--text-primary);
+    border: none;
+    padding: 0.85rem 1.5rem;
+    border-radius: 14px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.btn-secondary:hover {
+    background: var(--color-gray-btn-hover);
+}
+
+/* Velocidad Selector */
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.speed-buttons {
+    display: flex;
+    background: #edf2f7;
+    padding: 3px;
+    border-radius: 8px;
+    gap: 2px;
+}
+
+.speed-btn {
+    border: none;
+    background: transparent;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.speed-btn.active {
+    background: #ffffff;
+    color: var(--text-primary);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+/* Tarjetas de Indicadores Digitales */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.stat-card {
+    padding: 1rem;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    border: 1px solid transparent;
+}
+
+.stat-card-pop {
+    background: #e6f7f0;
+    border-color: #d1f2e5;
+}
+
+.stat-card-sat {
+    background: #fffbeb;
+    border-color: #fef3c7;
+}
+
+.stat-card-years {
+    background: #ebf8ff;
+    border-color: #bee3f8;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+    text-align: center;
+}
+
+.stat-value {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* Panel Visualizador */
+.visualizer-card {
+    position: relative;
+}
+
+.visualizer-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.visualizer-card-header h2 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.region-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+}
+
+.visualizer-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.map-wrapper {
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f7fafc;
+    border-radius: 16px;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.interactive-map {
+    width: 100%;
+    height: auto;
+}
+
+/* Regiones del Mapa */
+.map-region {
+    fill: rgba(16, 185, 129, 0.08);
+    stroke: rgba(45, 55, 72, 0.2);
+    stroke-width: 1.5px;
+    cursor: pointer;
+    transition: fill 0.4s ease, stroke 0.2s ease, filter 0.2s ease;
+}
+
+.map-region:hover {
+    stroke: var(--color-accent);
+    filter: drop-shadow(0 0 3px rgba(16, 185, 129, 0.3));
+}
+
+.map-region.active-region {
+    stroke: var(--text-primary);
+    stroke-width: 2.5px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1));
+}
+
+.map-label {
+    fill: var(--text-primary);
+    font-size: 8px;
+    font-weight: 700;
+    pointer-events: none;
+    text-anchor: middle;
+    letter-spacing: 0.02em;
+    opacity: 0.85;
+}
+
+/* Scrubber */
+.scrubber-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.scrubber-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+#scrubber-current-time {
+    font-weight: 700;
+    color: var(--color-accent);
+}
+
+/* Tarjeta de Gráfico a lo ancho */
+.chart-card {
+    grid-column: 1 / -1;
+}
+
+.chart-card h2 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.chart-container {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1rem;
+}
+
+#growthChart {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Estilos de la Sección Matemática */
+.math-section {
+    padding: 2.5rem;
+}
+
+.math-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+}
+
+.math-content h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    border-bottom: 2px solid #e5e8e5;
+    padding-bottom: 1rem;
+}
+
+.math-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Numeración de pasos en la teoría */
+.step-num {
+    background: var(--color-accent-light);
+    color: var(--color-accent);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-family: var(--font-heading);
+    margin-right: 0.75rem;
+}
+
+.math-block h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+}
+
+.math-block p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.math-formula {
+    background: #fbfcfb;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+}
+
+.math-block ul {
+    list-style: none;
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.math-block ul li::before {
+    content: "•";
+    color: var(--color-accent);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.note {
+    font-size: 0.85rem !important;
+    color: var(--text-secondary);
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

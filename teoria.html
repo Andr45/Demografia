@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DemografiaInteractiva - Análisis Matemático</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- KaTeX CSS y JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <!-- Estilos Locales -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Barra de Navegación Premium -->
+        <nav class="navbar">
+            <div class="nav-title">
+                <i class="fa-solid fa-people-group logo-icon"></i>
+                <div class="nav-title-text">
+                    <h1>DemografíaInteractiva</h1>
+                    <p>Simula crecimiento exponencial y logístico sobre mapas espaciales</p>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">
+                    <i class="fa-solid fa-earth-americas"></i> Simulación
+                </a>
+                <a href="teoria.html" class="nav-link active">
+                    <i class="fa-solid fa-book-bookmark"></i> Análisis Matemático
+                </a>
+            </div>
+        </nav>
+
+        <!-- Contenido Principal (Teoría) -->
+        <main class="main-content">
+            <section class="math-section card-glass">
+                <div class="math-content">
+                    <h2>Ecuaciones del Crecimiento Poblacional</h2>
+                    
+                    <div class="math-block">
+                        <h3><span class="step-num">1</span>El Modelo Exponencial (Malthus)</h3>
+                        <p>Thomas Malthus propuso que una población crece de manera directamente proporcional a su número actual de individuos. La tasa neta es constante y asume recursos infinitos en el entorno:</p>
+                        <div class="math-formula">
+                            $$\frac{dP}{dt} = r \cdot P$$
+                        </div>
+                        <p>La solución analítica de esta ecuación lineal separable de primer orden, con condición inicial $P(0) = P_0$, es:</p>
+                        <div class="math-formula">
+                            $$P(t) = P_0 e^{rt}$$
+                        </div>
+                        <p class="note">Inconveniente: Predice una curva geométrica que crece indefinidamente hacia el infinito, ignorando las limitaciones físicas de espacio y alimentación en la realidad.</p>
+                    </div>
+
+                    <div class="math-block">
+                        <h3><span class="step-num">2</span>El Modelo Logístico (Verhulst)</h3>
+                        <p>Pierre-François Verhulst resolvió esta limitación al añadir el factor corrector no lineal $(1 - P/K)$, que simula la competencia intraespecífica por recursos:</p>
+                        <div class="math-formula">
+                            $$\frac{dP}{dt} = r \cdot P \left(1 - \frac{P}{K}\right)$$
+                        </div>
+                        <p>Donde $P(t)$ representa la población en el año $t$, $r$ es la tasa de crecimiento intrínseco, y $K$ es la **Capacidad de Carga** (límite máximo que el entorno puede alimentar de forma sostenible).</p>
+                    </div>
+
+                    <div class="math-block">
+                        <h3><span class="step-num">3</span>Solución Analítica Logística</h3>
+                        <p>Por separación de variables e integrando mediante fracciones parciales, se obtiene la solución exacta:</p>
+                        <div class="math-formula">
+                            $$P(t) = \frac{K \cdot P_0 \cdot e^{rt}}{K + P_0(e^{rt} - 1)}$$
+                        </div>
+                        <p>Esta curva tiene forma de S (sigmoide). Al inicio crece parecido al modelo exponencial, pero a medida que $P$ se acerca a $K$, la pendiente decae asintóticamente hacia cero.</p>
+                    </div>
+
+                    <div class="math-block">
+                        <h3><span class="step-num">4</span>El Punto de Inflexión</h3>
+                        <p>La velocidad de crecimiento de la curva logística aumenta al inicio y alcanza su valor máximo en el punto de inflexión matemática:</p>
+                        <div class="math-formula">
+                            $$P = \frac{K}{2}$$
+                        </div>
+                        <p>En este instante exacto, la segunda derivada es cero ($\frac{d^2P}{dt^2} = 0$). Antes del punto de inflexión, el crecimiento es acelerado; después, comienza la desaceleración demográfica por la presión de los recursos limitados en el ecosistema.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

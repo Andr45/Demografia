@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DemografiaInteractiva - Modelo de Crecimiento Poblacional</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Estilos Locales -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Barra de Navegación Premium -->
+        <nav class="navbar">
+            <div class="nav-title">
+                <i class="fa-solid fa-people-group logo-icon"></i>
+                <div class="nav-title-text">
+                    <h1>DemografíaInteractiva</h1>
+                    <p>Simula crecimiento exponencial y logístico sobre mapas espaciales</p>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">
+                    <i class="fa-solid fa-earth-americas"></i> Simulación
+                </a>
+                <a href="teoria.html" class="nav-link">
+                    <i class="fa-solid fa-book-bookmark"></i> Análisis Matemático
+                </a>
+            </div>
+        </nav>
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <div class="grid-layout">
+                <!-- Columna de Controles -->
+                <div class="control-panel card-glass">
+                    <div class="panel-header">
+                        <h2>Controles Demográficos</h2>
+                        <p>Ajusta el comportamiento de crecimiento de la región activa.</p>
+                    </div>
+
+                    <!-- Nombre de Región Seleccionada -->
+                    <div class="input-group">
+                        <label>Región Seleccionada en el Mapa</label>
+                        <div class="select-wrapper">
+                            <select id="region-selector" onchange="selectRegion(this.value)">
+                                <option value="center">Región Centro (Urbana)</option>
+                                <option value="north">Región Norte (Expansiva)</option>
+                                <option value="south">Región Sur (Saturada)</option>
+                                <option value="east">Región Este (Industrial)</option>
+                                <option value="west">Región Oeste (Agrícola)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Modelo de Crecimiento -->
+                    <div class="input-group">
+                        <label for="growth-model">Modelo de Crecimiento</label>
+                        <div class="select-wrapper">
+                            <select id="growth-model" onchange="updateSimulation()">
+                                <option value="logistic" selected>Modelo Logístico (Limitado por K)</option>
+                                <option value="exponential">Modelo Exponencial (Ilimitado / Malthus)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Población Inicial P0 -->
+                    <div class="input-group">
+                        <div class="label-val">
+                            <label for="param-p0">Población Inicial (P₀)</label>
+                            <span class="val-display" id="val-p0">15,000 hab</span>
+                        </div>
+                        <input type="range" id="param-p0" min="1000" max="100000" value="15000" step="1000" oninput="updateSimulation()">
+                        <span class="input-helper">Población de partida en el año cero.</span>
+                    </div>
+
+                    <!-- Tasa de Crecimiento r -->
+                    <div class="input-group">
+                        <div class="label-val">
+                            <label for="param-r">Tasa de Crecimiento Intrínseca (r)</label>
+                            <span class="val-display" id="val-r">0.080</span>
+                        </div>
+                        <input type="range" id="param-r" min="0.01" max="0.25" value="0.08" step="0.005" oninput="updateSimulation()">
+                        <span class="input-helper">Representa la diferencia neta anual entre nacimientos y muertes.</span>
+                    </div>
+
+                    <!-- Capacidad de Carga K -->
+                    <div class="input-group">
+                        <div class="label-val">
+                            <label for="param-k">Capacidad de Carga del Entorno (K)</label>
+                            <span class="val-display" id="val-k">90,000 hab</span>
+                        </div>
+                        <input type="range" id="param-k" min="20000" max="250000" value="90000" step="5000" oninput="updateSimulation()">
+                        <span class="input-helper">Población máxima que la región puede soportar (solo aplica en modelo logístico).</span>
+                    </div>
+
+                    <!-- Botones de Acción de Tiempo -->
+                    <div class="action-buttons">
+                        <button class="btn-primary" id="btn-play" onclick="togglePlay()">
+                            <i class="fa-solid fa-pause" id="play-icon"></i> <span id="play-text">Pausar Tiempo</span>
+                        </button>
+                        <button class="btn-secondary" onclick="resetAnimation()">
+                            <i class="fa-solid fa-rotate-left"></i> Reiniciar
+                        </button>
+                    </div>
+
+                    <!-- Selector de Velocidad -->
+                    <div class="speed-control">
+                        <span>Velocidad:</span>
+                        <div class="speed-buttons">
+                            <button class="speed-btn active" id="speed-1x" onclick="setSpeed(1)">1x</button>
+                            <button class="speed-btn" id="speed-5x" onclick="setSpeed(5)">5x</button>
+                            <button class="speed-btn" id="speed-15x" onclick="setSpeed(15)">15x</button>
+                        </div>
+                    </div>
+
+                    <!-- Tarjetas de Información Instantánea -->
+                    <div class="stats-grid">
+                        <div class="stat-card stat-card-pop">
+                            <span class="stat-label">Población Actual</span>
+                            <span class="stat-value" id="stat-current-pop">15,000 hab</span>
+                        </div>
+                        <div class="stat-card stat-card-sat">
+                            <span class="stat-label">Saturación (P/K)</span>
+                            <span class="stat-value" id="stat-saturation">16.7%</span>
+                        </div>
+                        <div class="stat-card stat-card-years">
+                            <span class="stat-label">Año Simulado</span>
+                            <span class="stat-value" id="stat-elapsed-years">Año 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna del Visualizador (Mapa Regional SVG) -->
+                <div class="visualizer-card card-glass">
+                    <div class="visualizer-card-header">
+                        <h2>Distribución de Regiones</h2>
+                        <span class="region-badge" id="active-region-badge">
+                            Región Centro
+                        </span>
+                    </div>
+                    <p class="input-helper">Haz clic sobre cualquier región del mapa para seleccionarla.</p>
+                    
+                    <div class="visualizer-body">
+                        <div class="map-wrapper">
+                            <svg viewBox="0 0 200 200" class="interactive-map">
+                                <!-- Región Norte -->
+                                <path id="region-north" class="map-region" d="M 20,20 L 180,20 L 150,80 L 50,80 Z" onclick="selectRegion('north')" />
+                                <!-- Región Oeste -->
+                                <path id="region-west" class="map-region" d="M 20,20 L 50,80 L 80,120 L 20,180 Z" onclick="selectRegion('west')" />
+                                <!-- Región Centro -->
+                                <path id="region-center" class="map-region" d="M 50,80 L 150,80 L 120,130 L 80,120 Z" onclick="selectRegion('center')" />
+                                <!-- Región Este -->
+                                <path id="region-east" class="map-region" d="M 180,20 L 180,180 L 120,130 L 150,80 Z" onclick="selectRegion('east')" />
+                                <!-- Región Sur -->
+                                <path id="region-south" class="map-region" d="M 80,120 L 120,130 L 180,180 L 20,180 Z" onclick="selectRegion('south')" />
+                                
+                                <!-- Textos/Etiquetas de Regiones -->
+                                <text x="100" y="45" class="map-label">Región Norte</text>
+                                <text x="42" y="105" class="map-label">Oeste</text>
+                                <text x="100" y="105" class="map-label">Centro</text>
+                                <text x="155" y="105" class="map-label">Este</text>
+                                <text x="100" y="160" class="map-label">Región Sur</text>
+                            </svg>
+                        </div>
+                        <div class="scrubber-container">
+                            <input type="range" id="animation-scrubber" min="0" max="50" value="0" step="1" oninput="scrubTime(this.value)">
+                            <div class="scrubber-labels">
+                                <span>Inicio (Año 0)</span>
+                                <span id="scrubber-current-time">Año Seleccionado: 0</span>
+                                <span>Fin (Año 50)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Crecimiento (A lo ancho) -->
+                <div class="chart-card card-glass">
+                    <h2>Curva de Crecimiento Demográfico</h2>
+                    <p class="input-helper">Evolución demográfica histórica proyectada en un horizonte de 50 años.</p>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Cargar JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
